@@ -31,9 +31,10 @@
 
 
                         
-                    <form action="{{ route('tiennghi.update') }}" method="POST">
+                    <form action="{{ route('tiennghi.update',$tiennghi->id) }}" method="POST">
                             @csrf
-                            
+                            <input type="hidden" name="_token" value="{{csrf_token()}}" />
+                            @method('put')
                            <div class="form-group">
                                 <label>Phòng ID</label>
                                  <select name="maphong_id" class="form-control" required>

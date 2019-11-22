@@ -70,21 +70,8 @@
 						</div>
 						<div class="col-xs-10 text-right menu-1">
 							<ul>
-								<li class="active"><a href="index.html">Home</a></li>
-								<li class="has-dropdown">
-									<a href="tours.html">Tours</a>
-									<ul class="dropdown">
-										<li><a href="#">Destination</a></li>
-										<li><a href="#">Cruises</a></li>
-										<li><a href="#">Hotels</a></li>
-										<li><a href="#">Booking</a></li>
-									</ul>
-								</li>
-								<li><a href="hotels.html">Hotels</a></li>
-								<li><a href="services.html">Services</a></li>
-								<li><a href="blog.html">Blog</a></li>
-								<li><a href="about.html">About</a></li>
-								<li><a href="contact.html">Contact</a></li>
+								<div id="colorlib-logo"><a href="http://localhost:8888/qlnhanghi/public/login">Đăng nhập</a></li>
+								
 							</ul>
 						</div>
 					</div>
@@ -255,7 +242,27 @@
 
 
 
-
+<div class="colorlib-tour colorlib-light-grey">
+	
+			<div class="tour-wrap">
+				@foreach($nhanghi as $nn)
+				@foreach($phong as $p)
+				<a href="#" class="tour-entry animate-box fadeInUp animated-fast">
+					<div class="tour-img" style="background-image: url(images/tour-1.jpg);">
+					</div>
+					<span class="desc">
+						<p class="star"><span><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i></span></p>
+						<h2>{{$nn ->tennhanghi}}</h2>
+						<span class="city">{{$nn->diachi}}</span>
+						<span class="price">{{$p->dongia}}</span>
+					</span>
+				</a>
+				@endforeach
+				@endforeach
+				
+			</div>
+			
+		</div>
 
 
 		<footer id="colorlib-footer" role="contentinfo">

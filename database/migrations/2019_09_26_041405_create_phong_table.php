@@ -20,10 +20,8 @@ class CreatePhongTable extends Migration
             $table->string('tenphong');
             $table->integer('chieudai');
             $table->integer('chieurong');
-            $table->integer('succhuatoida');
-            $table->string('ghichu');
             $table->string('hinhanh');
-            $table->integer('trangthai');
+            $table->integer('trangthai')->comment('0>Phòng trống,1>Đã thanh toán,2>Chưa thanh toán');;
             $table->integer('dongia');
             $table->timestamps();
         });

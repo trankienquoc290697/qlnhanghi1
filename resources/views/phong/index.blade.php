@@ -42,9 +42,9 @@
                         <td>{{ $p -> tenphong }}</td>
                         <td>{{ $p -> chieudai }}</td>
                         <td>{{ $p -> chieurong }}</td>
-                        <td>{{ $p -> ghichu }}</td>
+                        
                         <td>{{ $p -> hinhanh }}</td>
-                    
+                    <td>{{ $p -> trangthai }}</td>
                         <td>{{ $p -> dongia }}</td>
                         
                          <td class="center">

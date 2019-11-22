@@ -27,9 +27,7 @@
                         <th>Role</th>
                         <th>Giới tính</th>
                         <th>SĐT</th>
-                        <th>Hình ảnh</th>
                         <th>Địa chỉ</th>
-                        <th>Remember_token</th>
                         <th>Delete</th>
                         <th>Edit</th>
                     </tr>
@@ -41,15 +39,39 @@
                         <td>{{ $u -> name }}</td>
                         <td>{{ $u -> email }}</td>
                         <td>{{ $u -> password }}</td>
-                        <td>{{ $u -> role }}</td>
-                        <td>{{ $u -> sex }}</td>
+                        <td> <div class="d-none d-lg-block">
+                            @if($u->role == 0)
+                            {{"Block"}}
+                            @elseif($u->role == 1)
+                            {{"User"}}
+                            @else
+                            {{"Admin"}}
+                            @endif
+                        </div></td>
+                        <td><div class="d-none d-lg-block">
+                            @if($u->sex == 1)
+                            {{"Nữ"}}
+                            @else
+                            {{"Nam"}}
+                            @endif
+                        </div></td>
                         <td>{{ $u -> phone }}</td>
-                        <td>{{ $u -> image }}</td>
                         <td>{{ $u -> address }}</td>
-                        <td>{{ $u -> remember_token }}</td>
                         
-                        <td class="center"><i class="fa fa-trash-o  fa-fw"></i><a href="phong/{{$u->id}}"> Xóa</a></td>
-                        <td class="center"><i class="fa fa-pencil fa-fw"></i> <a href="admin1/theloai/sua/{{ $u -> id }}">Sửa</a></td>
+                         <td class="center">
+                            <form action="{{ route('users.destroy',$u->id) }}" method="POST">
+                            @csrf
+                            @method('delete') 
+                             <button class="btn-fab btn-fab-sm btn-danger shadow text-white icon-trash">Xóa</button>       
+                            </form>&nbsp;
+                        </td>
+
+                         <td class="center">
+                            <form action="{{ route('users.edit',$u->id) }}" method="GET">
+                            @csrf
+                            <button class="btn-fab btn-fab-sm btn-primary shadow text-white icon-pencil">Sửa</button> 
+                            </form>
+                        </td>
                     </tr>
                     
                     @endforeach

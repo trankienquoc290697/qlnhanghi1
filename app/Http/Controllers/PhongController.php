@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Phong;
 use App\NhaNghi;
+use App\DiaDiem;
 use Illuminate\Support\Facades\Input;
 class PhongController extends Controller
 {
@@ -31,7 +32,7 @@ class PhongController extends Controller
         $nhanghi = NhaNghi::all();
         return view('phong.create',['phong'=>$phong,'nhanghi'=>$nhanghi]);
     }
-   
+    
 
     /**
      * Store a newly created resource in storage.
@@ -41,37 +42,46 @@ class PhongController extends Controller
      */
     public function store(Request $request)
     {
-         $this ->validate ($request,
-            [
-                'tenphong' => 'required',
-                'chieudai' => 'required',
-                'chieurong' => 'required',
-                'hinhanh' => 'required',
-                'ghichu' => 'required',
-                'nhanghi_id' => 'required',
-                'dongia' =>'required',
+       $this ->validate ($request,
+        [
+            'tenphong' => 'required',
+            'chieudai' => 'required',
+            'chieurong' => 'required',
+            'nhanghi_id' => 'required',
+            'dongia' =>'required',
 
 
-            ],
-            [
-                'trangthai.required'=>'ban chưa nhập trạng thái',
-                'trangthai.min'=>'tên phải có độ dài từ 3 đến 100 ký tự',
-                'trangthai.max'=>'tên phải có độ dài từ 3 đến 100 ký tự',
+        ],
+        [
+            'trangthai.required'=>'ban chưa nhập trạng thái',
+            'trangthai.min'=>'tên phải có độ dài từ 3 đến 100 ký tự',
+            'trangthai.max'=>'tên phải có độ dài từ 3 đến 100 ký tự',
 
-            ]);
-        $phong= new Phong;
-        $phong->nhanghi_id= $request->nhanghi_id; 
-        $phong->tenphong= $request->tenphong;
-        $phong->chieudai= $request->chieudai;
-        $phong->chieurong= $request->chieurong;
-        $phong->ghichu= $request->ghichu;
-        $phong->dongia=$request->dongia;
-        $phong->hinhanh=$request->hinhanh;
-        $phong-> save();
-
-        return redirect()->route('phong.create')->with('thongbao','Thêm thành công');
-
+        ]);
+       $phong= new Phong;
+       $phong->nhanghi_id= $request->nhanghi_id; 
+       $phong->tenphong= $request->tenphong;
+       $phong->chieudai= $request->chieudai;
+       $phong->chieurong= $request->chieurong;
+       
+       
+       if ($request->hasFile('hinhanh')) {
+        $this->validate($request, [
+            'hinhanh' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+        $image = $request->file('hinhanh');
+        $name = time().'.'.$image->getClientOriginalExtension();
+        $destinationPath = public_path('/images');
+        $image->move($destinationPath, $name);
+        $phong->hinhanh = $name;
     }
+    $phong->trangthai= $request->trangthai;
+    $phong->dongia=$request->dongia;
+    $phong-> save();
+
+    return redirect()->route('phong.create')->with('thongbao','Thêm thành công');
+
+}
 
     /**
      * Display the specified resource.
@@ -92,9 +102,11 @@ class PhongController extends Controller
      */
     public function edit($id)
     {
-         $phong = Phong::findOrFail($id);
-        return view('phong.edit',compact('phong'));
-    }
+       $phong = Phong::findOrFail($id);
+       $nhanghi = NhaNghi::All();
+       $diadiem = DiaDiem::All();
+       return view('phong.edit',compact('phong','nhanghi','diadiem'));
+   }
 
     /**
      * Update the specified resource in storage.
@@ -106,48 +118,49 @@ class PhongController extends Controller
     public function update(Request $request, $id)
     { 
 
-        $diadiem= DiaDiem::findOrFail($id);
-         $this ->validate ($request,
-             [
-                'tenphong' => 'required',
-                'chieudai' => 'required',
-                'chieurong' => 'required',
-                'hinhanh' => 'required',
-                'ghichu' => 'required',
-                'nhanghi_id' => 'required',
-                'dongia' =>'required',
+     $phong= Phong::FindOrFail($id);
+     $this ->validate ($request,
+       [
+        'tenphong' => 'required',
+        'chieudai' => 'required',
+        'chieurong' => 'required',
+        'hinhanh' => 'required',
+        'nhanghi_id' => 'required',
+        'dongia' =>'required',
 
 
-            ],
-            [
-                'trangthai.required'=>'ban chưa nhập trạng thái',
-                'trangthai.min'=>'tên phải có độ dài từ 3 đến 100 ký tự',
-                'trangthai.max'=>'tên phải có độ dài từ 3 đến 100 ký tự',
+    ],
+    [
+        'trangthai.required'=>'ban chưa nhập trạng thái',
+        'trangthai.min'=>'tên phải có độ dài từ 3 đến 100 ký tự',
+        'trangthai.max'=>'tên phải có độ dài từ 3 đến 100 ký tự',
 
-            ]);
-        $phong= Phong::FindOrFail($id);
-        $phong->nhanghi_id= $request->nhanghi_id; 
-        $phong->tenphong= $request->tenphong;
-        $phong->chieudai= $request->chieudai;
-        $phong->chieurong= $request->chieurong;
-        $phong->ghichu= $request->ghichu;
-        $phong->dongia=$request->dongia;
-          if ($request->hasFile('hinhanh')) {
-            $this->validate($request, [
-                'hinhanh' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            ]);
-            $image = $request->file('hinhanh');
-            $name = time().'.'.$image->getClientOriginalExtension();
-            $destinationPath = public_path('/images');
-            $image->move($destinationPath, $name);
-            $phong->hinhanh = $name;
-        }
-        $phong-> save();
-
-        return redirect()->route('phong.update',$id)->with('thongbao','sửa thành công');
-
-
+    ]);
+     $phong= Phong::FindOrFail($id);
+     $phong->nhanghi_id= $request->nhanghi_id; 
+     $phong->tenphong= $request->tenphong;
+     $phong->chieudai= $request->chieudai;
+     $phong->chieurong= $request->chieurong;
+     
+     
+     if ($request->hasFile('hinhanh')) {
+        $this->validate($request, [
+            'hinhanh' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+        $image = $request->file('hinhanh');
+        $name = time().'.'.$image->getClientOriginalExtension();
+        $destinationPath = public_path('/images');
+        $image->move($destinationPath, $name);
+        $phong->hinhanh = $name;
     }
+    $phong->trangthai= $request->trangthai;
+    $phong->dongia=$request->dongia;
+    $phong-> save();
+
+    return redirect()->route('phong.edit',$id)->with('thongbao','sửa thành công');
+
+
+}
 
     /**
      * Remove the specified resource from storage.

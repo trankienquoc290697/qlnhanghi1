@@ -111,7 +111,8 @@ class NhaNghiController extends Controller
     public function edit($id)
     {
          $nhanghi = NhaNghi::findOrFail($id);
-        return view('nhanghi.edit',compact('nhanghi'));
+           $diadiem = DiaDiem::All();
+        return view('nhanghi.edit',compact('nhanghi','diadiem'));
     }
 
     /**

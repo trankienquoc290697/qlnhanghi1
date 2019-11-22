@@ -15,8 +15,8 @@
             <div class="col-lg-7" style="padding-bottom:120px">
 
 
-             @if(count($errors)>0)
-             <div class=" alert alert-danger">
+               @if(count($errors)>0)
+               <div class=" alert alert-danger">
 
                 @foreach ($errors->all() as $err)
                 {{$err}}<br>
@@ -32,7 +32,7 @@
             </div>
             @endif
 
-            <form action="{{ route('phong.store') }}" method="POST">
+            <form id="needs-validation" novalidate action="{{ route('phong.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group">
                     <label>Nhà nghỉ ID</label>
@@ -46,14 +46,14 @@
                 <div class="form-group">
                     <label>Tên phòng</label>
                     <select class="form-control" name='tenphong'>
-                     <option selected>Phòng đơn</option>
-                     <option>Phòng đôi</option>
-                     <option>Phòng 3 người</option>
-                     <option>Phòng 4 người</option>
-                 </select>
-             </div>
+                       <option selected>Phòng đơn</option>
+                       <option>Phòng đôi</option>
+                       <option>Phòng 3 người</option>
+                       <option>Phòng 4 người</option>
+                   </select>
+               </div>
 
-             <div class="form-group">
+               <div class="form-group">
                 <label>Chiều dài</label>
                 <input class="form-control" name="chieudai" />
             </div>
@@ -63,37 +63,31 @@
                 <input class="form-control" name="chieurong" />
             </div>
 
-<div class="form-group"><br>
+            <div class="form-group"><br>
                 <label>Hình ảnh</label>
                 <input type="file" name="hinhanh" id="exampleInputFile">
                 <p class="help-block">Chọn ảnh sản phẩm</p>
             </div>
-
- <div class="form-group"><br>
-                <label>Đơn giá</label>
-                <input class="form-control" name="dongia">
-            </div>
-
             <div class="form-group"><br>
-                <label>Ghi chú</label>
-                <select class="form-control" name='ghichu'>
-                 <option selected>Phòng trống</option>
-                 <option>Đã thành toán</option>
-                 <option>Phòng đầy</option>  
-             </select>
-             </div>
-
-             
-
-           
-            <button type="submit" class="btn btn-default">Thêm</button>
-            <button type="reset" class="btn btn-default">Làm mới</button>
-            <form>
-            </div>
+                <label>Trạng thái</label>
+                <select class="form-control" name='trangthai'>
+                   <option selected>Phòng trống</option>
+                   <option>Đã thành toán</option>
+                   <option>Phòng đầy</option>  
+               </select>
+           </div>
+           <div class="form-group"><br>
+            <label>Đơn giá</label>
+            <input class="form-control" name="dongia">
         </div>
-        <!-- /.row -->
+        <button type="submit" class="btn btn-default">Thêm</button>
+        <button type="reset" class="btn btn-default">Làm mới</button>
+        <form>
+        </div>
     </div>
-    <!-- /.container-fluid -->
+    <!-- /.row -->
+</div>
+<!-- /.container-fluid -->
 </div>
 <!-- /#page-wrapper -->
 

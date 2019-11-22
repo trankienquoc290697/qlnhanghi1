@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\NhaNghi;
 
 use Illuminate\Http\Request;
 

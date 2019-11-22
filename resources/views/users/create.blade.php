@@ -48,20 +48,18 @@
                         </div>
                         <div class="form-group"><br>
                             <label>Vai trò</label>
-                            <input class="form-control" name="role" >
+                            <input type="radio" name="role" value="0"> Block
+                            <input type="radio" name="role" value="1"> User
+                            <input type="radio" name="role" value="2"> Admin
                         </div>
                         <div class="form-group"><br>
                             <label>Giới tính</label><br>
-                            <input type="radio" name="sex" value="nam"> Nam
-                            <input type="radio" name="sex" value="nu"> Nữ
+                            <input type="radio" name="sex" value="2"> Nam
+                            <input type="radio" name="sex" value="1"> Nữ
                         </div>
                         <div class="form-group"><br>
                             <label>SĐT</label>
                             <input class="form-control" name="phone" >
-                        </div>
-                        <div class="form-group"><br>
-                            <label>Hình ảnh</label>
-                            <input class="form-control" name="image" >
                         </div>
                         <div class="form-group"><br>
                             <label>Địa chỉ</label>

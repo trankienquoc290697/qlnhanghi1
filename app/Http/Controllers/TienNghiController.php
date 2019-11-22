@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\TienNghi;
 use App\Phong;
 
+use Illuminate\Support\Facades\Auth;
+
 class TienNghiController extends Controller
 {
     /**
@@ -81,7 +83,9 @@ class TienNghiController extends Controller
      */
     public function edit($id)
     {
-        //
+       $tiennghi= TienNghi::findOrFail($id);
+        $phong = Phong::All();
+        return view('tiennghi.edit',compact('tiennghi','phong'));
     }
 
     /**
@@ -110,7 +114,7 @@ class TienNghiController extends Controller
         $tiennghi->tentiennghi= $request->tentiennghi;
         $tiennghi-> save();
 
-        return redirect()->route('tiennghi.update',$id)->with('thongbao','sửa thành công');
+        return redirect()->route('tiennghi.edit',$id)->with('thongbao','sửa thành công');
 
     }
 
